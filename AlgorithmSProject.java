@@ -6,7 +6,9 @@ public class AlgorithmSProject {
     
     int[] arr = {-10,-10,2,5,7,8,8,6,10};
     int optimal_value = non_recursive(arr);
-    System.out.println(optimal_value);
+    System.out.println("non_recursive algorithm result = " + optimal_value);
+    int optimal_value2 = recursive(arr);
+    System.out.println("recursive algorithm result = " + optimal_value2);
 }
 static int maxResult = Integer.MIN_VALUE;
 
