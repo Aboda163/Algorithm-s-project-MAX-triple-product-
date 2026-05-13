@@ -4,35 +4,11 @@ public class AlgorithmSProject {
 
     public static void main(String[] args) {
     
-    int[] arr = {-10,-10,2,5,7,8,8,6,10};
+    int[] arr = {-12,-10,2,5,15,8,8,11,13};
     int optimal_value = non_recursive(arr);
     System.out.println("non_recursive algorithm result = " + optimal_value);
     int optimal_value2 = recursive(arr);
     System.out.println("recursive algorithm result = " + optimal_value2);
-}
-static int maxResult = Integer.MIN_VALUE;
-
-public static void Max(int[] nums, int index, int count, int currentProduct) {
-    
-    if (count == 3) {
-        maxResult = Math.max(maxResult, currentProduct);
-        return;
-    }
-    
-    if (index == nums.length) {
-        return; 
-    }
-
-
-    Max(nums, index + 1, count + 1, currentProduct * nums[index]);
-
-    Max(nums, index + 1, count, currentProduct);
-}
-
-public static int recursive(int[] nums) {
-    maxResult = Integer.MIN_VALUE;
-    Max(nums, 0, 0, 1); 
-    return maxResult;
 }
     public static int non_recursive(int[] nums){
         int max1 = Integer.MIN_VALUE;
@@ -68,4 +44,54 @@ public static int recursive(int[] nums) {
 
         return Math.max(option1, option2);
     }
+    public static int recursive(int[] A) {
+        heapSort(A);
+        
+        int n = A.length;
+        int option1 = A[n-1] * A[n-2] * A[n-3];
+        int option2 = A[0] * A[1] * A[n-1];
+        
+        return Math.max(option1, option2);
+    }
+    public static void heapSort(int[] A) {
+        int heapSize = A.length;
+        buildMaxHeap(A, heapSize);
+        
+        for (int i = A.length - 1; i >= 1; i--) {
+            int temp = A[0];
+            A[0] = A[i];
+            A[i] = temp;
+            
+            heapSize--;
+            maxHeapify(A, 0, heapSize);
+        }
+    }
+
+    public static void buildMaxHeap(int[] A, int heapSize) {
+        for (int i = (A.length / 2) - 1; i >= 0; i--) {
+            maxHeapify(A, i, heapSize);
+        }
+    }
+
+    public static void maxHeapify(int[] A, int i, int heapSize) {
+        int l = 2 * i + 1; 
+        int r = 2 * i + 2; 
+        int largest = i;
+
+        if (l < heapSize && A[l] > A[i]) {
+            largest = l;
+        }
+        
+        if (r < heapSize && A[r] > A[largest]) {
+            largest = r;
+        }
+        
+        if (largest != i) {
+            int temp = A[i];
+            A[i] = A[largest];
+            A[largest] = temp;
+            maxHeapify(A, largest, heapSize);
+        }
+    }
+    
 }
